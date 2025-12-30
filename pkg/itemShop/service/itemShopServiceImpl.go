@@ -13,9 +13,9 @@ func NewItemShopServicImpl(itemShopRepository _itemShopRepository.ItemShopReposi
 	return &itemShopServiceImpl{itemShopRepository}
 }
 
-func (s *itemShopServiceImpl) Listing() ([]*_itemShopModel.Item, error) {
+func (s *itemShopServiceImpl) Listing(itemFilter *_itemShopModel.ItemFilter) ([]*_itemShopModel.Item, error) {
 	// entity
-	itemList, err := s.itemShopRepository.Listing()
+	itemList, err := s.itemShopRepository.Listing(itemFilter)
 	if err != nil {
 		return nil, err
 	}
