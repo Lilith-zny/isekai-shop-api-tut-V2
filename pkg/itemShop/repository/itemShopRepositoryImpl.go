@@ -2,6 +2,7 @@ package repository
 
 import (
 	"github.com/Lilith-zny/isekai-shop-api-tut-V2/entities"
+	_itemShopException "github.com/Lilith-zny/isekai-shop-api-tut-V2/pkg/itemShop/exception"
 	"github.com/labstack/echo/v4"
 	"gorm.io/gorm"
 )
@@ -20,7 +21,7 @@ func (r *itemShopRepositoryImpl) Listing() ([]*entities.Item, error) {
 
 	if err := r.db.Find(&itemList).Error; err != nil {
 		r.logger.Errorf("Failed to list items: %s", err.Error())
-		return nil, err
+		return nil, &_itemShopException.ItemListing{}
 	}
 	return itemList, nil
 }
