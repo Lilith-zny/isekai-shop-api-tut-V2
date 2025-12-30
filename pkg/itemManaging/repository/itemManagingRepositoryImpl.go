@@ -3,6 +3,7 @@ package repository
 import (
 	"github.com/Lilith-zny/isekai-shop-api-tut-V2/entities"
 	_itemManagingException "github.com/Lilith-zny/isekai-shop-api-tut-V2/pkg/itemManaging/exception"
+	_itemManagingModel "github.com/Lilith-zny/isekai-shop-api-tut-V2/pkg/itemManaging/model"
 	"github.com/labstack/echo/v4"
 	"gorm.io/gorm"
 )
@@ -25,4 +26,12 @@ func (r *itemManagingRepositoryImpl) Creating(itemEntity *entities.Item) (*entit
 	}
 
 	return item, nil
+}
+
+func (r *itemManagingRepositoryImpl) Editing(itemID uint64, itemEditingReq *_itemManagingModel.ItemEditingReq) (uint64, error) {
+	if err := r.db.Model(&entities.Item{}).Where("id = ?", itemID).Updates(itemEditingReq).Error; err != nil {
+		r.logger.Errorf("Editing item failed: %s", err.Error())
+		return 0, &_itemManagingException.ItemEditing{}
+	}
+	return itemID, nil
 }
